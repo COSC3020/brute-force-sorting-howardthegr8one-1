@@ -21,3 +21,15 @@ randomly without memory instead of systematically trying them?
 
 Describe your reasoning and the conclusion you've come to. Your reasoning is the
 most important part. Add your answer to this markdown file.
+
+## Runtime Analysis for my Implementation
+Since this algorithm creates all permutations of a given array (assuming the sorted version is the last one to be found) then the runtime to generate these permutations is $\Theta(n!)$, although even if the sorted version is found before the last permutation we would still have a runtime of $\Theta((n-k)!)$ where the sorted permutation is the $k^{th}$ permutation. Furthermore once each full length permutation has been found the `isSorted()` function is called which runs in linear time, if the found permutation is the sorted version then a different loop is run to copy the sorted elements into the original array, however since the `if(done[0])` condition is now true this copying loop simply replaces the `if(isSorted(q))` check for each permutation and remains a linear term. Therefore the runtime of my implementation would be $\Theta(n \cdot n!)$.
+
+### Best-case input:
+A sorted list would be the best-case input as this would only need the algorithm to recurse down one single branch of permutations taking linear time, find the sorted version and the `isSorted()` function would run in linear time. This would give a runtime of $\Theta(n^2)$ because the for loop in the function would have to run and the `isSorted()` function within that loop would also run. 
+
+### Worst-case input:
+A reverse-sorted list would be the worst-case input as it would require the algorithm to generate every single permutation before eventually finding the sorted one as the last possible permutation. It would also run the `isSorted()` function at every full permutation, and would run the for loop in the `if (done[0])` statement as well. Thus the worst-case runtime is also $\Theta(n \cdot n!)$.
+
+### Random Permutation Generation:
+The complexity could either be quadratic or infinite for random generation. By creating random permutations without memory the first permutation could be sorted which would be similar to the best-case input above where the first branch of recursive calls would result in the sorted permutation. However random permutations may never result in a sorted version in which case the runtime would be infinite.
